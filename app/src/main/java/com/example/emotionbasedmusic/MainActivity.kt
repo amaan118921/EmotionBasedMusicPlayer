@@ -13,14 +13,18 @@ import androidx.fragment.app.commit
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
+import com.example.emotionbasedmusic.container.AppContainer
 import com.example.emotionbasedmusic.data.Music
+import com.example.emotionbasedmusic.eventBus.DataEvent
 import com.example.emotionbasedmusic.eventBus.MessageEvent
 import com.example.emotionbasedmusic.fragments.MusicFragment
 import com.example.emotionbasedmusic.helper.Constants
 import com.example.emotionbasedmusic.services.MusicService
 import dagger.hilt.android.AndroidEntryPoint
 import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
 import java.util.*
+import javax.inject.Inject
 import kotlin.collections.HashSet
 
 @AndroidEntryPoint
@@ -36,9 +40,14 @@ class MainActivity : AppCompatActivity() {
     var musicIntent: Intent? = null
     private var song: Music? = null
     private val permissionEventsListeners: MutableSet<RequestPermissionEventListener> = HashSet()
+
+    @Inject
+    lateinit var appContainer: AppContainer
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        if(!EventBus.getDefault().isRegistered(this)) EventBus.getDefault().register(this)
+        appContainer.repo.initSharedPreferences()
         musicIntent = Intent(this, MusicService::class.java)
         this.isFromNotification =
             intent?.extras?.getBoolean(Constants.IS_FROM_NOTIFICATION) ?: false
@@ -51,6 +60,18 @@ class MainActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         EventBus.getDefault().post(MessageEvent(getString(R.string.activity_destroyed)))
+        EventBus.getDefault().unregister(this)
+    }
+
+    @Subscribe
+    fun onMessageEvent(event: MessageEvent) {
+        when(event.getString()) {
+            "deviceToken" -> {
+               val ev = event as DataEvent
+               val token = ev.getDataString()
+                appContainer.repo.setSharedPreferences(Constants.DEVICE_TOKEN, token)
+            }
+        }
     }
 
     override fun onBackPressed() {

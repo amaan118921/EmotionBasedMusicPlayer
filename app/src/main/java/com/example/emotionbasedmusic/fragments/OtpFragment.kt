@@ -85,6 +85,10 @@ class OtpFragment : Fragment(), View.OnClickListener {
                         ).show()
                         toAddProfileFragment()
                     } else {
+                        appContainer.repo.setSharedPreferences(
+                            Constants.IS_PROFILE_COMPLETE,
+                            Constants.PROFILE_COMPLETE
+                        )
                         dialog.dismiss()
                         Toast.makeText(requireContext(), "Welcome Back", Toast.LENGTH_SHORT).show()
                         toFaceScanFragment()

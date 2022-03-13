@@ -23,7 +23,7 @@ class PhoneFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentPhoneBinding.inflate(inflater)
         return binding.root
     }

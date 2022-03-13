@@ -51,7 +51,6 @@ class MusicFragment : Fragment(), View.OnClickListener, SeekBar.OnSeekBarChangeL
     private var key: Boolean? = true
     private var service: MusicService? = null
     private var isBounded: Boolean? = false
-    private var isRecyclerViewSetUp = false
     private var isFromFavorite: Boolean = false
     val _likedSongs = MutableLiveData<MutableList<Music>>()
     private var pagerSnapHelper: PagerSnapHelper? = null
@@ -61,8 +60,6 @@ class MusicFragment : Fragment(), View.OnClickListener, SeekBar.OnSeekBarChangeL
     private var songImageAdapter: SongImageAdapter? = null
     private var urlList = mutableListOf<String>()
     private var musicIntent: Intent? = null
-    private var shuffledLikedSongs = mutableListOf<Music>()
-    private var shuffledLikedSongUrl = mutableListOf<String>()
     companion object {
         lateinit var binding: NewMusicFragmentBinding
     }

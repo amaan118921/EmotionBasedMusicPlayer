@@ -27,6 +27,8 @@ class Constants {
         const val MUSIC_FRAGMENT_FROM_NOTIFICATION = "music_fragment_from_notification"
         const val NOTIFICATION_CHANNEL_ID = "EMOTION_BASED_MUSIC_ID"
         const val NOTIFICATION_CHANNEL_NAME = "EMOTION_BASED_MUSIC"
+        const val FCM_CHANNEL_ID = "FCM_CHANNEL_ID"
+        const val FCM_CHANNEL_NAME = "FCM_CHANNEL_NAME"
         const val PACKAGE_NAME = "com.example.emotionbasedmusic"
         const val ID = 15
         const val INTENT_REQUEST_CODE = 250
@@ -52,6 +54,7 @@ class Constants {
         const val APP_NAME = "EMOSIC"
         const val LOGGED_IN = "Logged_In"
         const val PROFILE_COMPLETE = "profile_complete"
+        const val ADMIN = "admin"
         const val IS_LOGGED_IN = "is_logged_in"
         const val WRITE_REQUEST_CODE = 199
         const val MOBILE = "mobile"
@@ -63,5 +66,10 @@ class Constants {
         const val EXECUTE_CAMERA_PERM = "execute_camera_perm"
         const val OPEN_CAMERA = "open_camera"
         const val IS_PROFILE_COMPLETE = "is_profile_complete"
+        const val DEVICE_TOKEN = "DEVICE_TOKEN"
+        const val SERVICE_ID = 118921
+        const val REQUEST_SONG_FRAG = "REQUEST_SONG_FRAG"
+        const val FCM_BASE_URL = "https://fcm.googleapis.com/"
+        const val fcmServerKey = "AAAAyc67Hk4:APA91bFGMgs5GbRHehGHzaSVSc-JZEsTF1AOVeLJKHznMYbM_yiN2ErADLV51j3AvtPeyKPRtuy57g9wGOVz7GTzKAF04gVoNuyCmcOaMQnlJl9EijN-_i3jBzbbVA9LjjeLgDh4jCcf"
     }
 }

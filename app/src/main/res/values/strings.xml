@@ -105,4 +105,10 @@
     <string name="forth_line">Here you go enjoy your favorite songs that too served according to your mood.</string>
     <string name="how_to_use_">How to use</string>
     <string name="no_songs_found">No songs found...</string>
+    <string name="request_a_song">Request a song</string>
+    <string name="request_for_a_song_to_us">Request for a Song to us</string>
+    <string name="enter_song_name">Enter Song name</string>
+
+    <string name="request_song">Request song</string>
+    <string name="pop_back_stack">pop_back_stack</string>
 </resources>

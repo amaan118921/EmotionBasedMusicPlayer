@@ -14,13 +14,19 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.emotionbasedmusic.R
 import com.example.emotionbasedmusic.data.Music
+import com.example.emotionbasedmusic.data.NotificationBody
+import com.example.emotionbasedmusic.data.RequestModel
 import com.example.emotionbasedmusic.data.UserInfo
+import com.example.emotionbasedmusic.eventBus.DataEvent
+import com.example.emotionbasedmusic.eventBus.MessageEvent
 import com.example.emotionbasedmusic.fragments.MoodRecognitionFragment
 import com.example.emotionbasedmusic.fragments.ResultSongsFragment
 import com.example.emotionbasedmusic.helper.Constants
 import com.example.emotionbasedmusic.helper.makeGone
 import com.example.emotionbasedmusic.helper.makeVisible
+import com.example.emotionbasedmusic.helper.toRequestModel
 import com.example.emotionbasedmusic.network.API
+import com.example.emotionbasedmusic.network.MESSAGE
 import com.example.emotionbasedmusic.services.MusicService
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.OnCompleteListener
@@ -36,6 +42,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import okhttp3.Dispatcher
+import org.greenrobot.eventbus.EventBus
 import java.io.IOException
 import java.lang.IllegalStateException
 import javax.inject.Inject
@@ -65,9 +72,40 @@ class MusicViewModel @Inject constructor(@ApplicationContext private val context
     var aKey = -1
     private var child = ""
     private var uri = ""
+    var _developerToken = MutableLiveData<String>()
 
     init {
         getLikedSongs()
+        getDeveloperToken()
+        getDeviceToken()
+    }
+
+    private fun getDeviceToken() {
+        ref = database.reference.child("tokens").child(auth.currentUser?.uid!!)
+        ref.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val token = snapshot.getValue(String::class.java)
+                EventBus.getDefault().post(token?.let { DataEvent("deviceToken", it) })
+            }
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+        })
+    }
+
+    private fun getDeveloperToken() {
+        ref = database.reference.child("tokens").child("developerToken")
+        ref.addValueEventListener(object: ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                _developerToken.value = snapshot.getValue(String::class.java)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+
+        })
     }
 
     fun parcelData(user: UserInfo) {
@@ -305,6 +343,28 @@ class MusicViewModel @Inject constructor(@ApplicationContext private val context
                 }
             } catch (e: IOException) {
                 e.printStackTrace()
+            }
+        }
+    }
+
+    fun postNotification(notificationBody: NotificationBody?, requestModel: RequestModel) {
+        viewModelScope.launch {
+            ref = database.reference.child("requests")
+            ref.push().setValue(requestModel).addOnCompleteListener { p0 ->
+                if (p0.isSuccessful) {
+                    viewModelScope.launch {
+                        val response = notificationBody?.let { MESSAGE.retrofitService.send(it) }
+                        if (response?.isSuccessful == true) {
+                            Toast.makeText(
+                                context,
+                                "Song requested, we will notify you when it's added",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        } else showToast("Cannot make request, try again later...")
+                        EventBus.getDefault()
+                            .post(MessageEvent(context.getString(R.string.pop_back_stack)))
+                    }
+                }
             }
         }
     }

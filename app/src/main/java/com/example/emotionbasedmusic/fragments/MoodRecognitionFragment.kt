@@ -20,6 +20,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.commit
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -66,6 +67,7 @@ class MoodRecognitionFragment : Fragment(), View.OnClickListener, Dialog.IListen
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        appContainer.repo.initSharedPreferences()
     }
 
     override fun onCreateView(
@@ -169,11 +171,18 @@ class MoodRecognitionFragment : Fragment(), View.OnClickListener, Dialog.IListen
                         R.id.how_to_use -> {
                             toHowToUseFrag()
                         }
+                        R.id.request_a_song -> {
+                            toRequestSongFragment()
+                        }
                     }
                     return true
                 }
             })
         }
+    }
+
+    private fun toRequestSongFragment() {
+        findNavController().navigate(R.id.requestSongFragment)
     }
 
     private fun toHowToUseFrag() {
@@ -217,7 +226,6 @@ class MoodRecognitionFragment : Fragment(), View.OnClickListener, Dialog.IListen
             }
         }
     }
-
 
     private fun showDialog() {
         dialog = Dialog(requireContext(), this)

@@ -14,7 +14,7 @@ buildscript {
         // in the individual module build.gradle files
         classpath 'com.google.gms:google-services:4.3.10'
         classpath("com.google.dagger:hilt-android-gradle-plugin:2.38.1")
-        classpath 'com.android.tools.build:gradle:7.0.3'
+        classpath 'com.android.tools.build:gradle:7.0.4'
         dependencies {
             classpath("androidx.navigation:navigation-safe-args-gradle-plugin:$nav_version")
         }
