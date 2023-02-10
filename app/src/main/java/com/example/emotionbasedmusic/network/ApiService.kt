@@ -1,6 +1,7 @@
 package com.example.emotionbasedmusic.network
 
 import com.example.emotionbasedmusic.data.Music
+import com.example.emotionbasedmusic.data.MusicModel
 import com.example.emotionbasedmusic.data.NotificationBody
 import com.example.emotionbasedmusic.helper.Constants
 import com.squareup.moshi.Moshi
@@ -30,17 +31,17 @@ private val retro = Retrofit.Builder().addConverterFactory(GsonConverterFactory.
 
 interface ApiService {
 
-    @GET("happy_songs_data")
-    suspend fun getHappySongs(): List<Music>
+    @GET("songs/happy")
+    suspend fun getHappySongs(): MusicModel
 
     @GET("sad_songs_data")
-    suspend fun getSadSongs(): List<Music>
+    suspend fun getSadSongs(): MusicModel
 
     @GET("neutral_songs_data")
-    suspend fun getNeutralSongs(): List<Music>
+    suspend fun getNeutralSongs(): MusicModel
 
     @GET("angry_songs_data")
-    suspend fun getAngrySongs(): List<Music>
+    suspend fun getAngrySongs(): MusicModel
 
     @Headers("Authorization:key=${Constants.fcmServerKey}",
         "Content-Type: application/json")

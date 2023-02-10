@@ -37,7 +37,7 @@ fun getIntent(context: Context): PendingIntent? {
     val intent = Intent(context, MainActivity::class.java)
     intent.putExtra(Constants.IS_FROM_NOTIFICATION, true)
     intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
-    return PendingIntent.getActivity(context, Constants.INTENT_REQUEST_CODE, intent, 0)
+    return PendingIntent.getActivity(context, Constants.INTENT_REQUEST_CODE, intent, PendingIntent.FLAG_IMMUTABLE)
 }
 
 fun setUpNotificationChannel(context: Context) {

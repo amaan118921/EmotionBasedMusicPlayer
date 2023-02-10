@@ -17,7 +17,7 @@ class Constants {
         const val CAMERA_REQUEST_CODE = 200
         const val SPLASH_FRAGMENT = "SplashFragment"
         const val USERS_DATA_FRAGMENT = "UsersDataFragment"
-        const val BASE_URL = "https://limitless-everglades-59097.herokuapp.com/"
+        const val BASE_URL = "https://emosicbackend-production.up.railway.app/"
         const val HAPPY_MOOD = "Happy"
         const val SAD_MOOD = "Sad"
         const val NEUTRAL_MOOD = "Neutral"
