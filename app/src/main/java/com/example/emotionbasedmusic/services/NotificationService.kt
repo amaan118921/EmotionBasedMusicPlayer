@@ -68,7 +68,7 @@ class NotificationService : FirebaseMessagingService() {
     fun createNotification(context: Context, songName: String?): Notification {
         setUpNotificationChannel(context)
         val contentBody = "Your requested song $songName is added to Emosic"
-        val pendingIntent = PendingIntent.getActivity(this, 0, Intent(this, MainActivity::class.java), PendingIntent.FLAG_IMMUTABLE)
+        val pendingIntent = PendingIntent.getActivity(this, 0, Intent(this, MainActivity::class.java), 0)
         return NotificationCompat.Builder(context, Constants.FCM_CHANNEL_ID)
             .setSmallIcon(R.drawable.figma_launcher_dark)
             .setContentTitle("Song added")

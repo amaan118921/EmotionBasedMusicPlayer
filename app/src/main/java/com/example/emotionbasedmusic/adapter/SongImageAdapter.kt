@@ -15,7 +15,6 @@ class SongImageAdapter(private val context: Context): RecyclerView.Adapter<SongI
 
     private var list = listOf<String>()
     private var intList = listOf<Int>()
-    private var test = arrayListOf<Int>()
     private var listSize = 8
     @SuppressLint("NotifyDataSetChanged")
     fun bindList(list: List<String>) {

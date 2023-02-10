@@ -221,16 +221,16 @@ class MusicViewModel @Inject constructor(@ApplicationContext private val context
             try {
                 when (mood) {
                     Constants.HAPPY_MOOD -> {
-                        musicData.value = API.retrofitService.getHappySongs().dataArray
+                        musicData.value = API.retrofitService.getHappySongs()
                     }
                     Constants.SAD_MOOD -> {
-                        musicData.value = API.retrofitService.getHappySongs().dataArray
+                        musicData.value = API.retrofitService.getSadSongs()
                     }
                     Constants.NEUTRAL_MOOD -> {
-                        musicData.value = API.retrofitService.getHappySongs().dataArray
+                        musicData.value = API.retrofitService.getNeutralSongs()
                     }
                     Constants.ANGRY_MOOD -> {
-                        musicData.value = API.retrofitService.getHappySongs().dataArray
+                        musicData.value = API.retrofitService.getAngrySongs()
                     }
                 }
             } catch (e: Exception) {
